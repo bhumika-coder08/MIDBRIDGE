@@ -1,0 +1,24 @@
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/*.py[cod]
+backend/.pytest_cache/
+
+# JavaScript
+frontend/node_modules/
+frontend/dist/
+
+# IDE and operating system
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# User-provided documents must never enter source control
+storage/
+uploads/
