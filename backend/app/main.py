@@ -3,15 +3,25 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 
-app = FastAPI(title=settings.app_name, version="0.1.0")
+app = FastAPI(
+    title=settings.app_name,
+    version="0.1.0",
+    description="MEDBRIDGE API foundation for document-driven mobility workflows.",
+)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+    allow_origins=settings.cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app|https://.*\.netlify\.app|http://localhost:.*|http://127\.0\.0\.1:.*",
     allow_credentials=True,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
+
+
+@app.get("/", tags=["system"])
+def root() -> dict[str, str]:
+    return {"name": settings.app_name, "status": "ok", "environment": settings.environment}
 
 
 @app.get("/health", tags=["system"])
